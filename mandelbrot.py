@@ -24,6 +24,14 @@ def mandelbrotCube(c, N):
         n += 1
     return n
 
+def mandelbrotFourth(c, N):
+    z = 0
+    n = 0
+    while abs(z) < 2 and n < N:
+        z = z*z*z*z + c
+        n += 1
+    return n
+
 def pointInSet(c, N):
     z = 0
     for i in range(N):
@@ -54,18 +62,21 @@ def drawPureLight(x, y, c, N, draw):
 def drawIterDark(x, y, c, N, draw):
     #m = mandelbrot(c, N)
     m = mandelbrotCube(c, N)
+    #m = mandelbrotFourth(c, N)
     color = 0 + int(255 * m / N)
     draw.point([x, y], (color, color, color))
 
 def drawIterLight(x, y, c, N, draw):
     #m = mandelbrot(c, N)
     m = mandelbrotCube(c, N)
+    #m = mandelbrotFourth(c, N)
     color = 255 - int(255 * m / N)
     draw.point([x, y], (color, color, color))
 
 def drawColor(x, y, c, N, draw):
     #m = mandelbrot(c, N)
     m = mandelbrotCube(c, N)
+    #m = mandelbrotFourth(c, N)
     hue = int(255 * m / N)
     saturation = 255
     value = 255 if m < N else 0
@@ -98,6 +109,17 @@ def plot():
     RE_END      =  1
     IM_START    = -1.5
     IM_END      =  1.5
+    
+    # --- fourth dimensions
+    ## Image size (pixels)
+    #WIDTH  = 1200
+    #HEIGHT = 1200
+    #
+    ## Plot window
+    #RE_START    = -2
+    #RE_END      =  2
+    #IM_START    = -2
+    #IM_END      =  2
    
     if COLOR_MODE:
         im = Image.new('HSV', (WIDTH, HEIGHT), (255, 255, 255))
