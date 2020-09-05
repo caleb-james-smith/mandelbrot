@@ -1,4 +1,10 @@
 # mandelbrot.py
+#
+# ---------------------------
+# Based on how to found here:
+# https://www.codingame.com/playgrounds/2358/how-to-plot-the-mandelbrot-set/mandelbrot-set
+# ---------------------------
+
 import numpy as np
 from PIL import Image, ImageDraw
 
