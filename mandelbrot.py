@@ -61,22 +61,22 @@ def drawPureLight(x, y, c, N, draw):
 
 def drawIterDark(x, y, c, N, draw):
     #m = mandelbrot(c, N)
-    m = mandelbrotCube(c, N)
-    #m = mandelbrotFourth(c, N)
+    #m = mandelbrotCube(c, N)
+    m = mandelbrotFourth(c, N)
     color = 0 + int(255 * m / N)
     draw.point([x, y], (color, color, color))
 
 def drawIterLight(x, y, c, N, draw):
     #m = mandelbrot(c, N)
-    m = mandelbrotCube(c, N)
-    #m = mandelbrotFourth(c, N)
+    #m = mandelbrotCube(c, N)
+    m = mandelbrotFourth(c, N)
     color = 255 - int(255 * m / N)
     draw.point([x, y], (color, color, color))
 
 def drawColor(x, y, c, N, draw):
     #m = mandelbrot(c, N)
-    m = mandelbrotCube(c, N)
-    #m = mandelbrotFourth(c, N)
+    #m = mandelbrotCube(c, N)
+    m = mandelbrotFourth(c, N)
     hue = int(255 * m / N)
     saturation = 255
     value = 255 if m < N else 0
@@ -87,6 +87,8 @@ def plot():
     PURE_MODE  = False
     DARK_MODE  = False
     MAX_ITER = 100
+
+    # note: width to height ratio should match real to imaginary range ratio to maintain shape similarity
   
     # --- standard dimensions
     # Image size (pixels)
@@ -100,26 +102,26 @@ def plot():
     #IM_END      =  1
     
     # --- cube dimensions
-    # Image size (pixels)
-    WIDTH  = 600
-    HEIGHT = 900
-    
-    # Plot window
-    RE_START    = -1
-    RE_END      =  1
-    IM_START    = -1.5
-    IM_END      =  1.5
-    
-    # --- fourth dimensions
     ## Image size (pixels)
-    #WIDTH  = 1200
-    #HEIGHT = 1200
+    #WIDTH  = 600
+    #HEIGHT = 900
     #
     ## Plot window
-    #RE_START    = -2
-    #RE_END      =  2
-    #IM_START    = -2
-    #IM_END      =  2
+    #RE_START    = -1
+    #RE_END      =  1
+    #IM_START    = -1.5
+    #IM_END      =  1.5
+    
+    # --- fourth dimensions
+    # Image size (pixels)
+    WIDTH  = 1200
+    HEIGHT = 1200
+    
+    # Plot window
+    RE_START    = -2
+    RE_END      =  2
+    IM_START    = -2
+    IM_END      =  2
    
     if COLOR_MODE:
         im = Image.new('HSV', (WIDTH, HEIGHT), (255, 255, 255))
