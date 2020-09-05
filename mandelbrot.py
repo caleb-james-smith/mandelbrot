@@ -25,8 +25,37 @@ def scan():
             inSet = pointInSet(c, 10)
             print("({0:.1f}, {1:.1f}): {2}".format(x, y, inSet))
 
+def drawPureDark(x, y, c, N, draw):
+    color = 0
+    if pointInSet(c, N):
+        color = 255
+    draw.point([x, y], (color, color, color))
+
+def drawPureLight(x, y, c, N, draw):
+    color = 255
+    if pointInSet(c, N):
+        color = 0
+    draw.point([x, y], (color, color, color))
+
+def drawIterDark(x, y, c, N, draw):
+    m = mandelbrot(c, N)
+    color = 0 + int(255 * m / N)
+    draw.point([x, y], (color, color, color))
+
+def drawIterLight(x, y, c, N, draw):
+    m = mandelbrot(c, N)
+    color = 255 - int(255 * m / N)
+    draw.point([x, y], (color, color, color))
+
+def drawColor(x, y, c, N, draw):
+    m = mandelbrot(c, N)
+    hue = int(255 * m / N)
+    saturation = 255
+    value = 255 if m < N else 0
+    draw.point([x, y], (hue, saturation, value))
+
 def plot():
-    COLOR_MODE = True
+    COLOR_MODE = False
     PURE_MODE  = False
     DARK_MODE  = False
     MAX_ITER = 100
@@ -50,34 +79,24 @@ def plot():
             c = complex(real, imaginary)
             # --- color 
             if COLOR_MODE:
-                m = mandelbrot(c, MAX_ITER)
-                hue = int(255 * m / MAX_ITER)
-                saturation = 255
-                value = 255 if m < MAX_ITER else 0
-                draw.point([x, y], (hue, saturation, value))
+                drawColor(x, y, c, MAX_ITER, draw)
             else:
                 # --- pure black and white if point is in set
                 if PURE_MODE:
                     if DARK_MODE:
                         # dark mode
-                        color = 0
-                        if pointInSet(c, MAX_ITER):
-                            color = 255
+                        drawPureDark(x, y, c, MAX_ITER, draw)
                     else:
                         # light mode
-                        color = 255
-                        if pointInSet(c, MAX_ITER):
-                            color = 0
+                        drawPureLight(x, y, c, MAX_ITER, draw)
                 # --- black/white based on number of iterations
                 else:
-                    m = mandelbrot(c, MAX_ITER)
                     if DARK_MODE:
                         # dark mode
-                        color = 0 + int(255 * m / MAX_ITER)
+                        drawIterDark(x, y, c, MAX_ITER, draw)
                     else:
                         # light mode
-                        color = 255 - int(255 * m / MAX_ITER)
-                draw.point([x, y], (color, color, color))
+                        drawIterLight(x, y, c, MAX_ITER, draw)
     
     if COLOR_MODE:
         im.convert('RGB').save('output.png', 'PNG')
